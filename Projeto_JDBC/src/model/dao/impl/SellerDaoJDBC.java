@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -98,6 +101,49 @@ public class SellerDaoJDBC implements SellerDao{
 	public List<Seller> findAll() {
 		
 		return null;
+	}
+	@Override
+	public List<Seller> findByDepartment(Department department) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT seller.*,department.Name as DepName "
+					+ "FROM seller INNER JOIN department "
+					+ "ON seller.DepartmentId = department.Id "
+					+ "WHERE DepartmentId = ? "
+					+ "ORDER BY Name");
+			
+			st.setInt(1, department.getId());
+			rs = st.executeQuery(); //O resultado do comando vai cair aqui
+			
+			List<Seller> list = new ArrayList<>(); //Instancio a lista que vai retornar
+			Map<Integer, Department> map = new HashMap<>(); //crio uma estrutura map vazia 
+			
+			//Aqui eu uso um While pra percorrer meu resultset enquanto tiver um prox
+			while(rs.next()) {
+
+				Department dep = map.get(rs.getInt("DepartmentId")); //Testo com o map se o departamento ja existe
+				
+				//Se o departamento não existir retorna nulo
+				if(dep == null) {
+						dep = instantiateDepartment(rs); //Agora sim, Instancio um departamento
+						map.put(rs.getInt("DepartmentId"), dep); //Salvo o departamento
+				}
+				
+				Seller obj = instantiateSeller(rs, dep); //Instancio agora um vendedor
+				list.add(obj); //Adciono o objt a lista
+		
+			}
+			return list; //retorno a lista
+		}
+		catch(SQLException e) {//Pego qualquer erro
+			throw new DbException(e.getMessage());
+		}
+		finally {// Fecho a conexão
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 }
