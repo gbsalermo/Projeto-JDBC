@@ -20,6 +20,7 @@ public class Program {
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao(); //Não uso new SellerDao, assim meu programa conhece apenas a interface e não a implementação
 		
+		System.out.println("=== TESTE 1: SELLER FINDBYID ====");
 		Seller seller = sellerDao.findById(3);
 		
 		//System.out.println(obj);

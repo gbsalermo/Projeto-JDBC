@@ -53,19 +53,8 @@ public class SellerDaoJDBC implements SellerDao{
 			rs = st.executeQuery(); //O resultado do comando vai cair aqui
 			if(rs.next()) {
 				//Para gerar os objetos corretamente
-				Department dep = new Department(); //Instancio um departamento
-				//Seto os valores dele
-				dep.setId(rs.getInt("DepartmentId"));
-				dep.setName(rs.getString("DepName"));
-				
-				Seller obj = new Seller(); //Instancio agora um vendedor
-				//Seto os valores dele
-				obj.setId(rs.getInt("Id"));
-				obj.setName(rs.getString("Name"));
-				obj.setEmail(rs.getString("Email"));
-				obj.setBaseSalary(rs.getDouble("BaseSalary"));
-				obj.setBirthDate(rs.getDate("BirthDate"));
-				obj.setDepartment(dep); //Faço a associação entre objetos
+				Department dep = instantiateDepartment(rs); //Instancio um departamento
+				Seller obj = instantiateSeller(rs, dep); //Instancio agora um vendedor
 				return obj;
 				
 				//obs: Todos os getAlgo tem que ter o nome correpondente ao do MySQL para evitar erros
@@ -83,6 +72,28 @@ public class SellerDaoJDBC implements SellerDao{
 		
 	}
 
+	//Abaixo não tratei as exceções pois ja trato no Find, entao só propaguei
+	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
+
+		//Aqui realizo a instanciação completa do Seller para meu FindByd
+		Seller obj = new Seller();
+		//Seto os valores dele
+		obj.setId(rs.getInt("Id"));
+		obj.setName(rs.getString("Name"));
+		obj.setEmail(rs.getString("Email"));
+		obj.setBaseSalary(rs.getDouble("BaseSalary"));
+		obj.setBirthDate(rs.getDate("BirthDate"));
+		obj.setDepartment(dep); //Faço a associação entre objetos
+		return obj;
+	}
+	private Department instantiateDepartment(ResultSet rs) throws SQLException {
+		//Aqui realizo a instanciação completa do Departamento para meu FindByd
+		Department dep = new Department();
+		//Seto os valores dele
+		dep.setId(rs.getInt("DepartmentId"));
+		dep.setName(rs.getString("DepName"));
+		return dep;
+	}
 	@Override
 	public List<Seller> findAll() {
 		
