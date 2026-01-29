@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Seller implements Serializable {
+public class Seller implements Serializable { //Implemento Serializable aqui tambem
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -19,6 +19,7 @@ public class Seller implements Serializable {
 	
 	private Department department;
 	
+	//Construtor vazio e com argumentos
 	public Seller() {
 		
 	}
@@ -32,6 +33,7 @@ public class Seller implements Serializable {
 		this.department = department;
 	}
 
+	//Getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -80,6 +82,7 @@ public class Seller implements Serializable {
 		this.department = department;
 	}
 
+	// Hash e equals
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -97,6 +100,7 @@ public class Seller implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	//To String padrão
 	@Override
 	public String toString() {
 		return "Seller [id=" + id + ", name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", baseSalary="

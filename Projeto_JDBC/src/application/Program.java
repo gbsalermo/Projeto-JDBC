@@ -2,6 +2,8 @@ package application;
 
 import java.util.Date;
 
+import model.dao.DaoFactory;
+import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
@@ -13,9 +15,12 @@ public class Program {
 		//Testando classe Department
 		Department obj = new Department(1, "Books");
 		//Testando classe Seller
+		//Seller seller = new Seller(21, "Boc", "bob@gmail.com", new Date(), 3000.0, obj);
 		
-		Seller seller = new Seller(21, "Boc", "bob@gmail.com", new Date(), 3000.0, obj);
 		
+		SellerDao sellerDao = DaoFactory.createSellerDao(); //Não uso new SellerDao, assim meu programa conhece apenas a interface e não a implementação
+		
+		Seller seller = sellerDao.findById(3);
 		
 		//System.out.println(obj);
 		System.out.println(seller);
