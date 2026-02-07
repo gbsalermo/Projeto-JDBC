@@ -16,7 +16,7 @@ Este projeto foi desenvolvido com os seguintes objetivos:
 * Implementar o **padrão DAO manualmente**, sem frameworks
 * Separar lógica de aplicação e acesso a dados
 
-Trata-se de um projeto **introdutório**, porém essencial para a base de qualquer desenvolvedor backend Java.
+Trata-se de um projeto **introdutório**, porém foi essencial para meu desenvolvimento como backend Java.
 
 ---
 
@@ -32,13 +32,12 @@ O sistema trabalha com um domínio simples, ideal para aprendizado inicial:
 * Um **Department** pode ter vários **Sellers**
 * Cada **Seller** pertence a um único **Department**
 
-Esse modelo foi escolhido propositalmente para facilitar a compreensão de **relacionamentos no banco de dados** e sua representação em Java.
 
 ---
 
 ## 🏛️ Estrutura do Projeto
 
-A organização do código segue uma estrutura clara e didática:
+A organização do código segue a seguinte estrutura:
 
 * **application**
   Contém as classes `Program` e `Program2`, responsáveis por executar e testar as funcionalidades
